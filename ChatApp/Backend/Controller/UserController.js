@@ -1,10 +1,15 @@
 const UserModel = require("../Models/User.model");
+const asyncHandler=require("express-async-handler")
+const generateToken=require("../config/generateToken");
+const { use } = require("../Routes/User.route");
 
-const RegisterUser = async (req, res) => {
+
+
+const RegisterUser =asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400).send({ err: "Pleasae Enter All The Details" });
+    res.status(400)
     throw new Error("Pleasae Enter All The Details");
   }
   const UserPresent = await UserModel.findOne({ email });
@@ -20,13 +25,35 @@ const RegisterUser = async (req, res) => {
     password,
     pic,
   });
+
   if (user) {
-    res.status(201).send({ msg: "Registration Successfully" });
+    const id=user._id
+    res.status(201).send({ msg: "Registration Successfully",token:generateToken(id),data:user });
   } else {
     res.status(400);
     throw new Error("Failed to create new User");
   }
-};
+});
+
+
+const userLogin=asyncHandler(async(req,res)=>{
+   const {email,password}=req.body;
+
+   const user=await UserModel.findOne({email});
+   if(!user){
+     throw new Error("Please Register First")
+   }
+
+  else if(user && user.password===password){
+    const id=user._id
+    res.send({"msg":"Login Successfully","token":generateToken(id)})
+   }
+
+   else if(user && user.password!==password){
+    res.send({"msg":"Wrong Password"})
+   }
+   
+})
 
 const SearchUser = async (req, res) => {
   const keyword = req.query.search
@@ -44,4 +71,4 @@ const SearchUser = async (req, res) => {
   res.send(users);
 };
 
-module.exports = { RegisterUser, SearchUser };
+module.exports = { RegisterUser, SearchUser,userLogin };
