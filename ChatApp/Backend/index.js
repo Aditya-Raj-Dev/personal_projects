@@ -1,29 +1,32 @@
-const express=require("express");
-require("dotenv").config()
-const {connection}= require("./database/db");
+const express = require("express");
+require("dotenv").config();
+const { connection } = require("./database/db");
 const UserRouter = require("./Routes/User.route");
+const { chats } = require("./data/data");
+const cors=require("cors")
+const app = express();
 
+app.use(express.json());
+app.use(cors())
 
-const app=express();
+ app.use("/user",UserRouter)
 
-app.use(express.json())
+app.get("/", (req, res) => {
+  res.json(chats);
+});
 
-app.use("/user",UserRouter)
+app.get("/:id", (req, res) => {
+    console.log(req.params)
+    const singleChat=chats.find((p)=>p._id===req.params.id)
+    res.send(singleChat)
+  });
 
-app.get("/",(req,res)=>{
-    res.send("welc")
-})
-
-
-const PORT=process.env.PORTNO || 8000;
-app.listen(8080,async()=>{
-    try{
-      await connection
-        console.log("connected",PORT)
-    }
-    catch(err){
-        console.log(err)
-    }
-   
-})
-
+const PORT = process.env.PORTNO || 8000;
+app.listen(8080, async () => {
+  try {
+    await connection;
+    console.log("connected", PORT);
+  } catch (err) {
+    console.log(err);
+  }
+});
