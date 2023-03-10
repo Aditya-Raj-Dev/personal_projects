@@ -1,9 +1,10 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  background-image: url("../Images/background.png");
+  background-image: url("../Images//bg2.jpg");
   background-size: cover;
   background-position: center;
+
 }
 
 .App-logo {
