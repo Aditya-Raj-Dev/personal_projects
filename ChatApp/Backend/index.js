@@ -3,6 +3,7 @@ require("dotenv").config();
 const { connection } = require("./database/db");
 const UserRouter = require("./Routes/User.route");
 const { chats } = require("./data/data");
+const {NotFound}=require("./Middleware/ErrorMiddleware")
 const cors=require("cors")
 const app = express();
 
@@ -20,6 +21,9 @@ app.get("/:id", (req, res) => {
     const singleChat=chats.find((p)=>p._id===req.params.id)
     res.send(singleChat)
   });
+
+
+
 
 const PORT = process.env.PORTNO || 8000;
 app.listen(8080, async () => {
