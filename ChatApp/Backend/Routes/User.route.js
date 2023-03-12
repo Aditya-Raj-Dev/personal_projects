@@ -3,7 +3,7 @@ const { RegisterUser, SearchUser, userLogin } = require("../Controller/UserContr
 
 const UserRouter=Router()
 
-UserRouter.post("/",RegisterUser)
+UserRouter.post("/signup",RegisterUser)
 UserRouter.post("/login",userLogin)
 UserRouter.get("/",SearchUser)
 

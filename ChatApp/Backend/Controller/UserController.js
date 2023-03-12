@@ -9,13 +9,13 @@ const RegisterUser =asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400)
+    res.status(400).send("Pleasae Enter All The Details")
     throw new Error("Pleasae Enter All The Details");
   }
   const UserPresent = await UserModel.findOne({ email });
 
   if (UserPresent) {
-    res.status(400);
+    res.status(500).send("User Already exists")
     throw new Error("User Already exists");
   }
 
@@ -38,9 +38,9 @@ const RegisterUser =asyncHandler(async (req, res) => {
 
 const userLogin=asyncHandler(async(req,res)=>{
    const {email,password}=req.body;
-
    const user=await UserModel.findOne({email});
    if(!user){
+    res.status(400).send("Please Register First")
      throw new Error("Please Register First")
    }
 
@@ -50,7 +50,8 @@ const userLogin=asyncHandler(async(req,res)=>{
    }
 
    else if(user && user.password!==password){
-    res.send({"msg":"Wrong Password"})
+    res.status(400).send("Wrong Password")
+     throw new Error("Wrong Password")
    }
    
 })
