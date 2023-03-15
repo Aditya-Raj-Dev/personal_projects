@@ -4,13 +4,16 @@ const { connection } = require("./database/db");
 const UserRouter = require("./Routes/User.route");
 const { chats } = require("./data/data");
 const {NotFound}=require("./Middleware/ErrorMiddleware")
-const cors=require("cors")
+const {Authentication}=require("./Middleware/Authmiddleware")
+const cors=require("cors");
+const { ChatRoute } = require("./Routes/Chat.route");
 const app = express();
 
 app.use(express.json());
 app.use(cors())
 
  app.use("/user",UserRouter)
+ app.use("/chats",Authentication,ChatRoute)
 
 app.get("/", (req, res) => {
   res.json(chats);
