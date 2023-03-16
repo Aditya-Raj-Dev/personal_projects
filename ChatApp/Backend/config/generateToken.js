@@ -7,4 +7,4 @@ return jwt.sign({id},process.env.SECRET_KEY,{
 })
 }
 
-module.exports=generateToken
+module.exports={generateToken}

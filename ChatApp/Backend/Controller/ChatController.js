@@ -1,5 +1,5 @@
-const ChatModel = require("../Models/Chat.model");
-const UserModel = require("../Models/User.model");
+const {ChatModel} = require("../Models/Chat.model");
+const {UserModel }= require("../Models/User.model");
 
 const accessChat = async (req, res) => {
   const { userId } = req.body;

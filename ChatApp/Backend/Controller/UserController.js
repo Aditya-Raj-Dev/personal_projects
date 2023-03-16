@@ -1,6 +1,6 @@
-const UserModel = require("../Models/User.model");
+const {UserModel} = require("../Models/User.model");
 const asyncHandler=require("express-async-handler")
-const generateToken=require("../config/generateToken");
+const {generateToken}=require("../config/generateToken");
 const { use } = require("../Routes/User.route");
 
 

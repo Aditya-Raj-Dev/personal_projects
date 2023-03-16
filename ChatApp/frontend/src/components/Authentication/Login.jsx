@@ -10,6 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom"
 
 const Login = () => {
   const [show, setShow] = React.useState(false);
@@ -19,6 +20,7 @@ const Login = () => {
   const [password,setPassword]=useState('')
   const toast = useToast();
   const [guestbutton,setGuestbutton]=useState(false)
+  const navigate=useNavigate()
 
 
 
@@ -51,7 +53,7 @@ const Login = () => {
       setButtonloading(false)
       // console.log(res)
       localStorage.setItem("usertoken",JSON.stringify(res.data.token))
-    
+    navigate("/chats")
      }
      catch(err){
       console.log(err,"err")
