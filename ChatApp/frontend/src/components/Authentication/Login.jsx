@@ -51,9 +51,10 @@ const Login = () => {
         position:"top",
       });
       setButtonloading(false)
-      // console.log(res)
-      localStorage.setItem("usertoken",JSON.stringify(res.data.token))
-    navigate("/chats")
+       console.log(res)
+      localStorage.setItem("userInfo",JSON.stringify(res.data))
+      // localStorage.setItem("username",JSON.stringify(res.data.name))
+     navigate("/chats")
      }
      catch(err){
       console.log(err,"err")
@@ -87,8 +88,9 @@ const Login = () => {
         position:"top",
       });
       setGuestbutton(false)
-      console.log(res.data)
+      console.log(res.data,"k")
       localStorage.setItem("usertoken",JSON.stringify(res.data.token))
+      localStorage.setItem("username",JSON.stringify(res.data.name))
     
      }
      catch(err){
@@ -110,7 +112,7 @@ const Login = () => {
     <VStack spacing="8px">
       <FormControl>
         <FormLabel>Emali Address</FormLabel>
-        <Input Placeholder="Enter Your  Emali Address" 
+        <Input placeholder="Enter Your  Emali Address" 
         value={email}
         onChange={(e)=>setEmail(e.target.value)}
         />

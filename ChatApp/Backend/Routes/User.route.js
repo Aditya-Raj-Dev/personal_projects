@@ -7,5 +7,5 @@ const UserRouter=Router()
 UserRouter.post("/signup",RegisterUser)
 UserRouter.post("/login",userLogin)
 UserRouter.get("/search",Authentication,SearchUser)
-
+ 
 module.exports={UserRouter}

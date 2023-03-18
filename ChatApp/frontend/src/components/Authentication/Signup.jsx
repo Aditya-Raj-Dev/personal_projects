@@ -142,11 +142,11 @@ const {name,value }=e.target;
     <VStack spacing="8px">
       <FormControl>
         <FormLabel>Name</FormLabel>
-        <Input Placeholder="Enter Your Name" name="name" onChange={handleform} />
+        <Input placeholder="Enter Your Name" name="name" onChange={handleform} />
       </FormControl>
       <FormControl>
         <FormLabel>Emali Address</FormLabel>
-        <Input Placeholder="Enter Your  Emali Address" name="email" onChange={handleform} />
+        <Input placeholder="Enter Your  Emali Address" name="email" onChange={handleform} />
       </FormControl>
       <FormControl>
         <FormLabel>Password</FormLabel>

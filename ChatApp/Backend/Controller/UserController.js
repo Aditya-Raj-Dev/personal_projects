@@ -46,7 +46,14 @@ const userLogin=asyncHandler(async(req,res)=>{
 
   else if(user && user.password===password){
     const id=user._id
-    res.send({"msg":"Login Successfully","token":generateToken(id)})
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
    }
 
    else if(user && user.password!==password){

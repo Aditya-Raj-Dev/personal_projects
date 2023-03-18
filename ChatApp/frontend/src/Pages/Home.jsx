@@ -1,10 +1,24 @@
 import { Box, Container, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Signup from '../components/Authentication/Signup'
 import Login from '../components/Authentication/Login'
+import { useNavigate} from "react-router-dom"
 
 const Home = () => {
+  const navigate=useNavigate()
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("usertoken"));
+
+    if (user){
+      console.log("sdakdf")
+    navigate("/chats")}
+    else{
+      navigate("/")
+    }
+  }, []);
+
   return (
     <Container maxW="500px" centerContent>
     <Box bg={"gray.200"}
