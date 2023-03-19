@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useToast } from '@chakra-ui/react';
+import { Avatar, Box, Button, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Text, Tooltip, useToast } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react'
 import { BiChevronDown, BiSearchAlt2 } from 'react-icons/bi';
 import { BellIcon } from '@chakra-ui/icons'
@@ -18,6 +18,8 @@ import {
   import { useDisclosure } from '@chakra-ui/hooks';
 import axios from 'axios';
 import ChatLoading from './ChatLoading';
+import UserListItem from './useAvatar/UserListItem';
+
 
 const SideDrawer = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -28,11 +30,11 @@ const SideDrawer = () => {
     const navigate=useNavigate()
     const toast=useToast()
 
-   const {user}=useContext(ChatContext)
+   const {user,chats,setChats,setSelectedChat}=useContext(ChatContext)
 
    function logouthandler(){
     localStorage.removeItem("userInfo")
-navigate("/")
+    navigate("/")
    }
 
    const handlesearch=()=>{
@@ -70,6 +72,36 @@ navigate("/")
             position:"bottom-left"
         })
      }
+   }
+
+  async function accessChat(userId){
+      try{
+        setLoadingChat(true)
+        const config={
+            headers:{
+                "Content-type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            }
+        }
+
+      
+        const {data}=await axios.post("http://localhost:8080/chats",{userId},config)
+         
+        if(!chats.find((c)=>c._id===data._id)) setChats([data,...chats])
+        setSelectedChat(data)
+         setLoadingChat(false)
+         onClose()
+        // console.log(data)
+      }
+      catch(err){
+        toast({
+            title:"Error Fetching the chat",
+            status:"error",
+            duration:3000,
+            isClosable:true,
+            position:"bottom-left"
+        })
+      }
    }
 
   return (
@@ -133,9 +165,14 @@ navigate("/")
         {loading ? <ChatLoading/> :
         (
             searchResult?.map((user)=>(
-                <
+                <UserListItem
+                key={user._id}
+                user={user}
+                 handleFunction={()=>accessChat(user._id)}
+                />
             ))
         )}
+        {loadingChat && <Spinner marginLeft="auto" display="flex"/>}
        </DrawerBody>
       </DrawerContent>
       </Drawer>
