@@ -7,6 +7,7 @@ const {NotFound}=require("./Middleware/ErrorMiddleware")
 const {Authentication}=require("./Middleware/Authmiddleware")
 const cors=require("cors");
 const { ChatRoute } = require("./Routes/Chat.route");
+const { MessageRoute } = require("./Routes/Message.route");
 const app = express();
 
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/user",UserRouter)
  app.use("/chats",Authentication,ChatRoute)
+ app.use("/message",Authentication,MessageRoute)
 
 // app.get("/:id", (req, res) => {
 //     console.log(req.params)
