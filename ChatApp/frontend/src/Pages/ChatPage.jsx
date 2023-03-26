@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {ChatContext} from "../Context/ChatProvider"
 
 import axios from "axios"
@@ -9,7 +9,7 @@ import ChatBox from '../components/Chats/ChatBox'
 
 const ChatPage = () => {
  const {user}=useContext(ChatContext)
-
+const [fetchAgain,setFetchAgain]=useState(false)
 console.log("chatpage")
   return (
     <div style={{width:"100%"}}>
@@ -19,8 +19,8 @@ console.log("chatpage")
       width="100%"   height="90vh" 
       padding="10px"
     >
-         {user  && <MyChats/>}
-         {user && <ChatBox/>}
+         {user  && <MyChats fetchAgain={fetchAgain}/>}
+         {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain}/>}
       </Box>
     </div>
   )

@@ -69,7 +69,7 @@ const Creategroupchat = async (req, res) => {
   if (!req.body.users || !req.body.name) {
     return res.status(400).send({ message: "please Fill all the feilds" });
   }
-  var users = req.body.users;
+  var users = JSON.parse(req.body.users);
   console.log(users);
   if (users.length < 2) {
     res.status(400).send("More then 2 is required for a group");
